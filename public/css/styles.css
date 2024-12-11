@@ -1,0 +1,45 @@
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+}
+
+
+.heading {
+    color: #FF7F50;
+    font-style: italic;
+    margin-top: 10px;
+    text-align: center;
+}
+
+
+th, td {
+    text-align: left;
+}
+
+th {
+    border-bottom: solid black;
+}
+
+.logo-text-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.property-img {
+    width: 100%;
+    height: auto;
+}
+.house-price {
+    color: #FF7F50;
+    font-size: 2.5rem;
+}
+
+.bidder-input {
+    width: 200px;
+}
+.amount-input {
+    width: 200px;
+}
+.property-description {
+    text-align: left;
+}
