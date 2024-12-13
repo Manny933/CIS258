@@ -4,6 +4,10 @@ const morgan = require("morgan");
 const express = require("express");
 const path = require("path");
 const app = express();
+const mongoose = require("mongoose");
+const { getHouseInfo } = require('./src/controllers/houseController');
+
+
 
 
 const PORT = process.env.PORT || 4000;
@@ -23,15 +27,26 @@ app.use(
 );
 
 
+mongoose.connect("mongodb+srv://ecorrea424:ZjwZet0d8YTQ3zhl@cluster0.jmw6g.mongodb.net/houses");
+const db = mongoose.connection;
+
+db.on("error", console.error.bind(console, "Connection Error"));
+
+db.once("open", () => {
+  debug(chalk.bgBlue.whiteBright.bold("MongoDB Connected Successfully"));
+});
+
 app.set("views", path.join(__dirname, "src", "views"));
 app.set("view engine", "ejs");
+
 
 // ------------ ROUTES ------------ //
 
 //Main Page
-app.get('/', (req, res) => {
-  res.render('index');
-});
+
+
+app.get("/", getHouseInfo);
+
 
 //Add House
 app.get('/house/add', (req, res) => {
