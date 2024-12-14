@@ -3,7 +3,7 @@ const HouseModel = require("../models/house");
 const getHouseInfo = async (req, res) => {
 
 
-    const allHouses = await HouseModel.find();
+    const allHouses = await HouseModel.find()
 
 
     let houses = [];
@@ -18,7 +18,9 @@ const getHouseInfo = async (req, res) => {
             country: house.houseInfo.address.country,
             description: house.houseInfo.description,
             askingPrice: house.houseInfo.askingPrice,
-            image: house.houseInfo.image
+            image: house.houseInfo.image,
+            name: house.bids.name,
+            amount: house.bids.amount
         });
 
     });
@@ -66,16 +68,29 @@ const deleteHouse = async (req, res) => {
 
     console.log("Deleting house with ID:", houseId);
 
-
-
     await HouseModel.findByIdAndDelete(houseId);
-
 
     res.redirect('/');
 
 };
 
-
+const getBids = async (req, res) => {
+   
+   
+        
+            const houseId = req.params.id;  
+            
+            const house = await HouseModel.findById(houseId);  
+    
+          
+    
+           // console.log("Fetched House with Bids:", house);  
+    
+            
+            res.render('houseBids', { house: house });
+        
+    };
+    
 
 
 
@@ -83,4 +98,5 @@ module.exports = {
     getHouseInfo,
     addHouse,
     deleteHouse,
+    getBids,
 };

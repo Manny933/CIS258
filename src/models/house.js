@@ -13,8 +13,8 @@ const HouseSchema = new mongoose.Schema({
     },
     bids: [
         {
-            name: { type: String, required: true },
-            amount: { type: Number, required: true }
+            name: { type: String  },
+            amount: { type: Number }
         }
     ]
 });

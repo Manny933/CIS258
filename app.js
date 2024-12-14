@@ -6,7 +6,8 @@ const path = require("path");
 const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser'); 
-const { getHouseInfo, addHouse, deleteHouse } = require('./src/controllers/houseController');
+const { getHouseInfo, addHouse, deleteHouse, getBids } = require('./src/controllers/houseController');
+
 
 
 
@@ -52,7 +53,6 @@ app.get("/", getHouseInfo);
 
 
 
-
 //Add House
 app.get('/house/add', addHouse);
 
@@ -61,9 +61,7 @@ app.get('/house/:id/delete', deleteHouse);
 
 
 // House Bids
-app.get('/house/:houseId/bids', (req, res) => {
-  res.render("houseBids");
-});
+app.get('/house/:id/bids', getBids);
 
 //Add a Bid for a specified House
 app.get('/house/:houseId/bid/add', (req,res) => {

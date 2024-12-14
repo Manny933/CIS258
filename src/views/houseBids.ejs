@@ -14,8 +14,8 @@
 
         <div class="row mb-4">
             <div class="col-sm-10 logo-text-container">
-                <div>
-                    <img src="/images/logo.png" height="200" width="300">
+                <div><a href="/">
+                    <img src="/images/logo.png" height="200" width="300"></a>
                 </div>
                 <div>
                     <h2 class="heading">Providing houses all over the world</h2>
@@ -26,26 +26,27 @@
         <div class="row">
 
             <div class="col-md-6">
-                <img src="/images/house.jpg" class="property-img">
+                <% if (house.houseInfo.image) { %>
+                    <img src="/images/<%= house.houseInfo.image %>" alt="House Image" />
+                <% } else { %>
+                    <img src="/images/photonotfound.jpeg" alt="Image Not Found" />
+                <% } %>
             </div>
-
 
             <div class="col-md-6">
                 <div class="property-description">
                     <div>
 
-                        <h4 style="font-weight: bold;">Switzerland</h4>
-                        <h3 style="font-weight: bold;">12 Valley of Kings, Geneva</h3>
+                        <h4 style="font-weight: bold;"><%= house.houseInfo.address.country%></h4>
+                        <h3 style="font-weight: bold;"><%= house.houseInfo.address.street %>, <%= house.houseInfo.address.city%></h3>
 
-                        <p class="house-price">$900,000</p>
-                        <p>A superb detached Victorian property on one of the town's finest roads, within easy reach of
-                            Barnes Village. The property has in excess of 6000 sq/ft of accommodation, a driveway, and a
-                            landscaped garden.</p>
+                        <p class="house-price">$<%= house.houseInfo.askingPrice.toLocaleString() %></p>
+                        <p><%= house.houseInfo.description%></p>
                     </div>
                 </div>
 
-
                 <table class="table">
+                    
                     <thead>
                         <tr>
                             <th></th>
@@ -55,26 +56,19 @@
                         </tr>
                     </thead>
                     <tbody>
+                        <% house.bids.forEach(bid => { %>
                         <tr>
                             <td><button class="btn btn-danger bid-btn">Delete</button></td>
-                            <td>Sonia Reading</td>
-                            <td>$200,000</td>
+                            <td><%= bid.name %></td>
+                            <td>$<%= bid.amount.toLocaleString() %></td>
                         </tr>
-                        <tr>
-                            <td><button class="btn btn-danger bid-btn">Delete</button></td>
-                            <td>Dick Johnson</td>
-                            <td>$202,400</td>
+                        
 
-                        </tr>
-                        <tr>
-                            <td><button class="btn btn-danger bid-btn">Delete</button></td>
-                            <td>Roland</td>
-                            <td>$203,000</td>
-
-                        </tr>
+                        
                     </tbody>
+                    <% }); %>
                 </table>
-
+                
 
                 <div class="d-flex justify-content-between">
                     <input type="text" class="bidder-input" placeholder="Bidder">
