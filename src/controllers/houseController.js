@@ -80,7 +80,7 @@ const getBids = async (req, res) => {
         
             const houseId = req.params.id;  
             
-            const house = await HouseModel.findById(houseId);  
+            const house = await HouseModel.findById(houseId).populate('bids');  
     
           
     
@@ -92,6 +92,39 @@ const getBids = async (req, res) => {
     };
     
 
+const addBid = async (req, res) => {
+    const houseId = req.params.id;  
+
+    
+    const { bidderName, bidAmount } = req.body;
+
+    try {
+        const house = await HouseModel.findById(houseId);  
+
+        if (!house) {
+            return res.status(404).send("House not found");
+        }
+
+        
+        if (!bidderName || !bidAmount || isNaN(bidAmount) || bidAmount <= 0) {
+            return res.status(400).send("Invalid form data.");
+        }
+
+       
+        house.push({ name: bidderName, amount: bidAmount });
+
+   
+        await house.save();
+
+       
+        res.redirect(`/house/${houseId}/bids`);
+    } catch (err) {
+        console.error("Error adding bid to house:", err);
+        res.status(500).send("Error adding bid to house");
+    }
+};
+
+
 
 
 module.exports = {
@@ -99,4 +132,5 @@ module.exports = {
     addHouse,
     deleteHouse,
     getBids,
+    addBid,
 };

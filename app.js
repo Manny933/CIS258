@@ -6,7 +6,7 @@ const path = require("path");
 const app = express();
 const mongoose = require("mongoose");
 const bodyParser = require('body-parser'); 
-const { getHouseInfo, addHouse, deleteHouse, getBids } = require('./src/controllers/houseController');
+const { getHouseInfo, addHouse, deleteHouse, getBids, addBid } = require('./src/controllers/houseController');
 
 
 
@@ -27,6 +27,7 @@ app.use(
     path.join(__dirname, "node_modules", "bootstrap", "dist", "css")
   )
 );
+app.use(express.urlencoded({ extended: true }));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -64,12 +65,10 @@ app.get('/house/:id/delete', deleteHouse);
 app.get('/house/:id/bids', getBids);
 
 //Add a Bid for a specified House
-app.get('/house/:houseId/bid/add', (req,res) => {
-  res.render("houseBids")
-});
+app.post('/house/:id/bid/add', addBid); 
 
 //Remove a Bid on a specified house
-app.get('/house/:houseId/bid/:bidId/delete', (req,res) => {
+app.get('/house/:id/bid/:bidId/delete', (req,res) => {
   res.render("houseBids")
 });
 

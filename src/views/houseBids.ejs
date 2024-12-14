@@ -15,7 +15,7 @@
         <div class="row mb-4">
             <div class="col-sm-10 logo-text-container">
                 <div><a href="/">
-                    <img src="/images/logo.png" height="200" width="300"></a>
+                        <img src="/images/logo.png" height="200" width="300"></a>
                 </div>
                 <div>
                     <h2 class="heading">Providing houses all over the world</h2>
@@ -28,25 +28,32 @@
             <div class="col-md-6">
                 <% if (house.houseInfo.image) { %>
                     <img src="/images/<%= house.houseInfo.image %>" alt="House Image" />
-                <% } else { %>
-                    <img src="/images/photonotfound.jpeg" alt="Image Not Found" />
-                <% } %>
+                    <% } else { %>
+                        <img src="/images/photonotfound.jpeg" alt="Image Not Found" />
+                        <% } %>
             </div>
 
             <div class="col-md-6">
                 <div class="property-description">
                     <div>
 
-                        <h4 style="font-weight: bold;"><%= house.houseInfo.address.country%></h4>
-                        <h3 style="font-weight: bold;"><%= house.houseInfo.address.street %>, <%= house.houseInfo.address.city%></h3>
+                        <h4 style="font-weight: bold;">
+                            <%= house.houseInfo.address.country%>
+                        </h4>
+                        <h3 style="font-weight: bold;">
+                            <%= house.houseInfo.address.street %>, <%= house.houseInfo.address.city%>
+                        </h3>
 
-                        <p class="house-price">$<%= house.houseInfo.askingPrice.toLocaleString() %></p>
-                        <p><%= house.houseInfo.description%></p>
+                        <p class="house-price">$<%= house.houseInfo.askingPrice.toLocaleString() %>
+                        </p>
+                        <p>
+                            <%= house.houseInfo.description%>
+                        </p>
                     </div>
                 </div>
 
                 <table class="table">
-                    
+
                     <thead>
                         <tr>
                             <th></th>
@@ -56,25 +63,35 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <% house.bids.forEach(bid => { %>
-                        <tr>
-                            <td><button class="btn btn-danger bid-btn">Delete</button></td>
-                            <td><%= bid.name %></td>
-                            <td>$<%= bid.amount.toLocaleString() %></td>
-                        </tr>
-                        
+                        <% house.bids.forEach(bid=> { %>
+                            <tr>
+                                <td><button class="btn btn-danger bid-btn">Delete</button></td>
+                                <td>
+                                    <%= bid.name %>
+                                </td>
+                                <td>$<%= bid.amount.toLocaleString() %>
+                                </td>
+                            </tr>
 
-                        
+
+
                     </tbody>
                     <% }); %>
                 </table>
-                
 
-                <div class="d-flex justify-content-between">
-                    <input type="text" class="bidder-input" placeholder="Bidder">
-                    <input type="number" class="amount-input" placeholder="0">
-                    <button class="btn btn-primary">Add</button>
-                </div>
+                <form action="/house/<%= house._id %>/add" method="post">
+                    <div class="d-flex justify-content-between">
+                      
+                        <input type="text" name="bidderName" class="bidder-input form-control" placeholder="Bidder" required>
+                        
+                        
+                        <input type="number" name="bidAmount" class="amount-input form-control" placeholder="0" min="1" required>
+                
+                      
+                        <button type="submit" class="btn btn-primary">Add Bid</button>
+                    </div>
+                </form>
+                
             </div>
         </div>
     </div>
