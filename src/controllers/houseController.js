@@ -1,37 +1,37 @@
-const HouseModel = require("../models/house"); 
+const HouseModel = require("../models/house");
 
 const getHouseInfo = async (req, res) => {
-    
-        
-        const allHouses = await HouseModel.find();
-         
 
-        let houses = [];
 
-        
-        allHouses.forEach((house) => {
-          
-                houses.push({
-                    id: house._id,
-                    street: house.houseInfo.address.street,
-                    city: house.houseInfo.address.city,
-                    country: house.houseInfo.address.country,
-                    description: house.houseInfo.description,
-                    askingPrice: house.houseInfo.askingPrice,
-                    image: house.houseInfo.image
-                });
-           
+    const allHouses = await HouseModel.find();
+
+
+    let houses = [];
+
+
+    allHouses.forEach((house) => {
+
+        houses.push({
+            id: house._id,
+            street: house.houseInfo.address.street,
+            city: house.houseInfo.address.city,
+            country: house.houseInfo.address.country,
+            description: house.houseInfo.description,
+            askingPrice: house.houseInfo.askingPrice,
+            image: house.houseInfo.image
         });
 
-        console.log("Populated houses array:", houses); 
+    });
 
-        res.render("index", { houses, isPopulated: houses.length > 0});
-    
+    //console.log("Populated houses array:", houses); 
+
+    res.render("index", { houses, isPopulated: true });
+
 };
 
 const addHouse = (req, res) => {
     const house = {
-        houseInfo:{
+        houseInfo: {
             address: {
                 street: "456 Apple Street",
                 city: "Appleton",
@@ -48,22 +48,39 @@ const addHouse = (req, res) => {
     (async () => {
         const newHouse = new HouseModel(house);
         try {
-            await newHouse.save();  
+            await newHouse.save();
             console.log("New house added:", newHouse);
-             res.redirect("/");
+            res.redirect("/");
         } catch (error) {
             console.log(error);
         }
     })();
 
-    
-   
+
+
 };
+
+const deleteHouse = async (req, res) => {
+
+    const houseId = req.params.id;
+
+    console.log("Deleting house with ID:", houseId);
+
+
+
+    await HouseModel.findByIdAndDelete(houseId);
+
+
+    res.redirect('/');
+
+};
+
 
 
 
 
 module.exports = {
     getHouseInfo,
-    addHouse
+    addHouse,
+    deleteHouse,
 };

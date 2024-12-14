@@ -46,7 +46,7 @@
                     <td><%=house.street%>, <%=house.city%></td>
                     <td><%=house.country%></td>
                     <td>$<%=house.askingPrice.toLocaleString()%></td>
-                    <td><button class="btn btn-danger">Delete</button></td>
+                    <td>  <a href="/house/<%= house.id %>/delete" class="btn btn-danger">Delete</a></td>
                 </tr>
                  <% }); %>  
             </tbody>
