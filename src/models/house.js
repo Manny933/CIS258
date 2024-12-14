@@ -9,7 +9,7 @@ const HouseSchema = new mongoose.Schema({
         },
         description: { type: String, required: true },
         askingPrice: { type: Number, required: true },
-        image: { type: String, required: true }
+        image: { type: String }
     },
     bids: [
         {

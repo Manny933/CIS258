@@ -5,7 +5,7 @@ const express = require("express");
 const path = require("path");
 const app = express();
 const mongoose = require("mongoose");
-const { getHouseInfo } = require('./src/controllers/houseController');
+const { getHouseInfo, addHouse } = require('./src/controllers/houseController');
 
 
 
@@ -48,10 +48,10 @@ app.set("view engine", "ejs");
 app.get("/", getHouseInfo);
 
 
+
+
 //Add House
-app.get('/house/add', (req, res) => {
-  res.redirect('/');
-});
+app.get('/house/add', addHouse);
 
 //Delete House 
 app.get('/house/:houseId/delete', (req, res) => {

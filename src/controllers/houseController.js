@@ -4,7 +4,7 @@ const getHouseInfo = async (req, res) => {
     
         
         const allHouses = await HouseModel.find();
-        console.log("All houses from DB:", allHouses);  
+         
 
         let houses = [];
 
@@ -29,7 +29,41 @@ const getHouseInfo = async (req, res) => {
     
 };
 
+const addHouse = (req, res) => {
+    const house = {
+        houseInfo:{
+            address: {
+                street: "456 Apple Street",
+                city: "Appleton",
+                country: "USA"
+            },
+            description: "A 2-bedroom house in a quiet neighborhood.",
+            askingPrice: 250000,
+            image: null
+        },
+        bids: []
+    };
+    console.log(house);
+
+    (async () => {
+        const newHouse = new HouseModel(house);
+        try {
+            await newHouse.save();  
+            console.log("New house added:", newHouse);
+             res.redirect("/");
+        } catch (error) {
+            console.log(error);
+        }
+    })();
+
+    
+   
+};
+
+
+
 
 module.exports = {
-    getHouseInfo
+    getHouseInfo,
+    addHouse
 };
