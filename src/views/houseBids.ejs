@@ -65,7 +65,7 @@
                     <tbody>
                         <% house.bids.forEach(bid=> { %>
                             <tr>
-                                <td><button class="btn btn-danger bid-btn">Delete</button></td>
+                                <td><a href="/house/<%= house._id %>/bid/<%= bid._id %>/delete" class="btn btn-danger">Delete</a></td>
                                 <td>
                                     <%= bid.name %>
                                 </td>

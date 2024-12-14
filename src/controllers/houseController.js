@@ -91,7 +91,7 @@ const getBids = async (req, res) => {
         
     };
     
-
+//incomplete//
 const addBid = async (req, res) => {
     const houseId = req.params.id;  
 
@@ -123,9 +123,16 @@ const addBid = async (req, res) => {
         res.status(500).send("Error adding bid to house");
     }
 };
-
-
-
+ 
+//incomplete//
+const deleteBid =  async (req, res) => {
+    let bidId = req.body.id;
+    
+    await HouseModel.findByIdAndDelete(bidId);
+    
+    res.redirect('/house/:id/bids');
+   
+};
 
 module.exports = {
     getHouseInfo,
@@ -133,4 +140,5 @@ module.exports = {
     deleteHouse,
     getBids,
     addBid,
+    deleteBid,
 };
